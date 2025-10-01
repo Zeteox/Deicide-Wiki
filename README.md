@@ -5,11 +5,11 @@
 
 ---
 ## 📝 Description
-**Deicide** est un mod minecraft visant a ajouter une 
+**Deicide** est un mod minecraft visant à ajouter une 
 aventure complète au jeu et ce projet est donc son wiki, un wiki dans 
 lequel on peut lire le lore ou bien voir l'utilité de certaines 
 choses ou comment les faire.  
-Vous pourrez aussi réagir des posts crée ou faire vos propres guides en vous connectant!
+Vous pourrez aussi réagir des posts crée ou faire vos propres guides en vous connectant !
 
 ---
 
@@ -40,14 +40,14 @@ Vous pourrez aussi réagir des posts crée ou faire vos propres guides en vous c
 
 Une fois le projet en cours d'exécution, accédez à `http://localhost:8080` dans votre navigateur pour accéder au wiki de Deicide.
 
-- **Connexion** : Utilisez vos identifiants pour vous connecter, ou inscrivez-vous.
-- **Exploration** : Naviguez à travers les différentes rubriques et expliquations que ce soit le lore ou les mécaniques, et bien plus via une interface intuitive.
+- **Connexion** : Utilisez vos identifiants pour vous connecter, où inscrivez-vous.
+- **Exploration** : Naviguez à travers les différentes rubriques et explications que ce soit le lore ou les mécaniques, et bien plus via une interface intuitive.
 
 ---
 
 ## 📬 Contact
 
-Pour toute question ou problème, n'hésitez pas à nous contacter :
+Pour toutes questions ou problèmes, n'hésitez pas à nous contacter :
 
 ### Loïc DELPRAT
 - **Email** : [loic.delprat@ynov.com](mailto:loic.delprat@ynov.com)
