@@ -10,7 +10,9 @@ app.use(express.static("./public"))
 
 //endpoints
 const indexHandler = require("./src/handlers/indexHandler");
+const signHandlers = require("./src/handlers/signHandlers");
 
 app.use("/",indexHandler)
+app.use("/sign", signHandlers)
 
 app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
