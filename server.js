@@ -9,6 +9,8 @@ app.use(express.json());
 app.use(express.static("./public"))
 
 //endpoints
-app.use("/",indexHandler.js)
+const indexHandler = require("./src/handlers/indexHandler");
+
+app.use("/",indexHandler)
 
 app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
