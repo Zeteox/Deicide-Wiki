@@ -12,7 +12,6 @@ document.addEventListener('mousemove', function (e) {
     }
 });
 
-// public/js/utils.js
 document.getElementById('switch-to-login').addEventListener('click', function (e) {
     e.preventDefault();
     if (document.getElementById('signup-form').style.display !== 'none') {
