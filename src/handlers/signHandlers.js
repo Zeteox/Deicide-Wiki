@@ -1,35 +1,46 @@
+const {renderSignPage} = require("../utils/utils");
+const {validationService} = require("../services/validationService");
+const {isAccountExistingByName, isAccountExistingByMail, saveAccount} = require("../utils/dataUtils");
 const express = require('express');
-const fs = require("fs");
 const router = express.Router();
-const {registerUser} = require("../utils/dataUtils");
 
 router.get("/", (req, res) => {
-    fs.readFile("./public/templates/sign.html", "utf-8", (err, data) => {
-        if (err) {
-            res.writeHead(404)
-            res.write("File Not Found")
-        } else {
-            res.writeHead(200, {
-                "content-type": "text/html;charset=utf-8"
-            })
-            res.write(data)
+    renderSignPage(res);
+});
+
+
+router.post("/register", async (req, res) => {
+    try {
+        let {name, mail, pwd} = req.body || {};
+        const error = {};
+
+        const validation = validationService(name, mail, pwd);
+        if (validation.fields || validation.mail) {
+            return renderSignPage(res, {error: validation, name, mail}, 400);
         }
-        res.end()
-    })
-})
 
-router.post("/register", (req, res) => {
-    const regex = /^.*@[a-zA-Z]+\..+$/;
-    let {name, mail, pwd} = req.body;
+        if (await isAccountExistingByName(name)) {
+            error.name = "This name is already use.";
+            //log
+        }
 
-    if (!name || !mail || !pwd) {
-        res.writeHead(400, "Missing required fields")
+        if (await isAccountExistingByMail(mail)) {
+            error.mail = "This mail is already use.";
+            //log
+        }
+
+        if (error.mail || error.name) {
+            //log
+            return renderSignPage(res, {error, name, mail}, 400);
+        }
+
+        await saveAccount(name, mail, pwd);
+        return res.status(201).redirect(`/`);
+    } catch (err) {
+        //log
+        const error = {write: "Server error during registration."};
+        return renderSignPage(res, {error, name: req.body.name, mail: req.body.mail}, 500);
     }
-    if (!regex.test(mail)) {
-        res.writeHead(400, "Format email is invalid")
-    } else {
-        registerUser(req, res, {name, mail, pwd})
-    }
-})
+});
 
 module.exports = router;
