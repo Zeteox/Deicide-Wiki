@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deicide Wiki</title>
+    <link rel="icon" type="image/png" href="/assets/deicide.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center
+         bg-[#DBC9A7]
+         bg-[repeating-linear-gradient(45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px),_repeating-linear-gradient(-45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px)]
+         overflow-hidden"
+>
+
+<div class="absolute inset-0 bg-gradient-to-b from-[#DBC9A7] via-[#F5E9D6] to-[#DBC9A7] opacity-90"></div>
+<div class="absolute top-0 left-0 w-64 h-64 bg-[#A68B5B] opacity-20 blur-3xl rounded-full animate-pulse"></div>
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-[#4C3826] opacity-10 blur-3xl rounded-full animate-pulse delay-300"></div>
+
+<div class="bg-[#F8F5F0] z-10 rounded-xl shadow-2xl p-8 w-full max-w-md border-2 border-[#A68B5B]">
+    <div class="flex flex-col items-center mb-6">
+        <img src="/assets/deicide.png" alt="Deicide Logo"
+             class="w-20 h-20 mb-4 bg-center rounded-xl border-4 border-[#A68B5B] shadow-md">
+        <h1 class="text-3xl font-extrabold text-[#A68B5B] drop-shadow mb-1">Deicide Wiki</h1>
+        <p class="text-[#4C3826] text-base mb-2">Come on to contribute and explore the mod</p>
+    </div>
+    <form action="/sign/register" method="POST" id="signup-form">
+        <div class="mb-4">
+            <label for="signup-username" class="block text-[#4C3826] font-semibold mb-2">Username</label>
+            <input type="text" id="signup-username" name="name" value="__SIGNUP_NAME__"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+            <span class="text-red-600 text-sm font-semibold">__SIGNUP_NAME_ERROR__</span>
+        </div>
+        <div class="mb-4">
+            <label for="signup-email" class="block text-[#4C3826] font-semibold mb-2">Email</label>
+            <input type="email" id="signup-email" name="mail" value="__SIGNUP_MAIL__"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+            <span class="text-red-600 text-sm font-semibold">__SIGNUP_MAIL_ERROR__</span>
+        </div>
+        <div class="mb-6">
+            <label for="signup-password" class="block text-[#4C3826] font-semibold mb-2">Password</label>
+            <input type="password" id="signup-password" name="pwd"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+        </div>
+        <button type="submit"
+                class="w-full bg-[#A68B5B] text-white font-bold py-2 rounded-lg hover:bg-[#4C3826] transition">
+            Create Account
+        </button>
+    </form>
+    <form action="/sign/login" method="POST" id="login-form" class="hidden">
+        <div class="mb-4">
+            <label for="login-username" class="block text-[#4C3826] font-semibold mb-2">Username</label>
+            <input type="text" id="login-username" name="name" value="__LOGIN_NAME__"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+            <span class="text-red-600 text-sm font-semibold">__LOGIN_NAME_ERROR__</span>
+        </div>
+        <div class="mb-4">
+            <label for="login-email" class="block text-[#4C3826] font-semibold mb-2">Email</label>
+            <input type="email" id="login-email" name="mail" value="__LOGIN_MAIL__"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+            <span class="text-red-600 text-sm font-semibold">__LOGIN_MAIL_ERROR__</span>
+        </div>
+        <div class="mb-6">
+            <label for="login-password" class="block text-[#4C3826] font-semibold mb-2">Password</label>
+            <input type="password" id="login-password" name="pwd"
+                   class="w-full px-4 py-2 border border-[#A68B5B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A68B5B] bg-[#F5E9D6]"
+                   required>
+        </div>
+        <button type="submit"
+                class="w-full bg-[#A68B5B] text-white font-bold py-2 rounded-lg hover:bg-[#4C3826] transition">
+             Log In
+        </button>
+    </form>
+    <div class="mt-4 text-center">
+        <a id="switch-to-login" class="text-[#A68B5B] hover:underline text-sm hover:text-[#4C3826] transition cursor-pointer">
+            I already have an account
+        </a>
+    </div>
+</div>
+<div id="custom-cursor"
+     class="fixed left-0 top-0 w-8 h-8 rounded-full pointer-events-none z-[9999]
+        transition-transform duration-150 ease-[cubic-bezier(.4,_2,_.3,_1)]
+        transition-opacity duration-500
+        bg-[radial-gradient(circle_at_10px_10px,_#A68B5B_70%,_#4C3826_100%)]
+        shadow-[0_0_8px_#A68B5B88]"
+     aria-hidden="true"
+></div>
+<script src="/js/utils.js"></script>
+</body>
+</html>
