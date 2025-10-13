@@ -81,6 +81,42 @@ Make sure you have the following installed:
 
 ---
 
+## 🏗️ Project Structure
+
+```
+├── 📁 data/
+│   └── 📄 accounts.json
+├── 📁 public/
+│   ├── 📁 assets/
+│   │   └── 🖼️ deicide.png
+│   ├── 📁 js/
+│   │   └── 📄 utils.js
+│   └── 📁 templates/
+│       ├── 🌐 index.html
+│       ├── 🌐 result.html
+│       └── 🌐 sign.html
+├── 📁 src/
+│   ├── 📁 handlers/
+│   │   ├── 📄 indexHandler.js
+│   │   ├── 📄 resultsHandler.js
+│   │   └── 📄 signHandlers.js
+│   ├── 📁 services/
+│   │   └── 📄 validationService.js
+│   └── 📁 utils/
+│       ├── 📄 dataUtils.js
+│       ├── 📄 logger.js
+│       ├── 📄 unitTests.js
+│       └── 📄 utils.js
+├── 🚫 .gitignore
+├── 📜 LICENSE
+├── 📖 README.md
+├── 📄 package-lock.json
+├── 📄 package.json
+└── 📄 server.js
+```
+
+---
+
 ## 🎮 Usage
 
 Once the project is running, open `http://localhost:8080`in your browser to access the Deicide Wiki.
