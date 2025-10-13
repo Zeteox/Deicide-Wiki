@@ -18,7 +18,7 @@ class AccountError extends Error {
  * @returns {Promise<Array>} - A promise that resolves to an array of account objects.
  * @throws {AccountError} - Throws an AccountError if there is a read error.
  */
-async function getAllAccounts() {
+export async function getAllAccounts() {
     try {
         const data = fs.readFileSync("./data/accounts.json", "utf-8");
         return data ? JSON.parse(data) : [];
