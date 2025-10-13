@@ -16,10 +16,13 @@ export function renderSignPage(res, {error = {}, name = '', mail = ''} = {}, sta
             .replace('value="__SIGNUP_MAIL__"', `value="${mail}"`)
             .replace('__SIGNUP_NAME_ERROR__', error.name ? error.name : '')
             .replace('__SIGNUP_MAIL_ERROR__', error.mail ? error.mail : '')
+            .replace('__SIGNUP_FIELD_ERROR__', error.fields ? error.fields : '')
             .replace('value="__LOGIN_NAME__"', `value="${name}"`)
             .replace('value="__LOGIN_MAIL__"', `value="${mail}"`)
             .replace('__LOGIN_NAME_ERROR__', error.name ? error.name : '')
-            .replace('__LOGIN_MAIL_ERROR__', error.mail ? error.mail : '');
+            .replace('__LOGIN_MAIL_ERROR__', error.mail ? error.mail : '')
+            .replace('__LOGIN_FIELD_ERROR__', error.fields ? error.fields : '')
+            .replace('__LOGIN_PASSWORD_ERROR__', error.pwd ? error.pwd : '');
         res.status(status).type("html").send(data);
     });
 }

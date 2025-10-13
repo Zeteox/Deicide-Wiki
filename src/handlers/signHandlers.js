@@ -2,7 +2,6 @@ const {renderSignPage} = require("../utils/utils");
 const {validationService} = require("../services/validationService");
 const {isAccountExistingByName, isAccountExistingByMail, saveAccount} = require("../utils/dataUtils");
 const express = require('express');
-const fs = require("fs");
 const { logUser } = require('../utils/dataUtils');
 const router = express.Router();
 
@@ -45,21 +44,43 @@ router.post("/register", async (req, res) => {
     }
 });
 
-router.post("/login", (req, res) => {
-    const regex = /^.*@[a-zA-Z]+\..+$/;
-    let {name, mail, pwd} = req.body;
+router.post("/login", async (req, res) => {
+    try {
+        let {name, mail, pwd} = req.body || {};
+        let error = {};
 
-    if (!name || !mail || !pwd) {
-        res.writeHead(400, "Missing required fields")
-        res.end()
-        return
-    }
-    if (!regex.test(mail)) {
-        res.writeHead(400, "Format email is invalid")
-        res.end()
-        return
-    } else {
-        logUser(req, res, {name, mail, pwd})
+        const validation = validationService(name, mail, pwd);
+        if (validation.fields || validation.mail) {
+            return renderSignPage(res, {error: validation, name, mail}, 400);
+        }
+
+        if (!(await isAccountExistingByName(name))) {
+            error.name = "No existing account with this name.";
+            req.log.warn({ user: name , mail }, "No existing account with this name.")
+        }
+
+        if (!(await isAccountExistingByMail(mail))) {
+            error.mail = "No existing account with this mail.";
+            req.log.warn({ user: name , mail }, "No existing account with this mail.")
+        }
+
+        if (error.mail || error.name) {
+            return renderSignPage(res, {error, name, mail}, 400);
+        }
+
+        error.pwd = await logUser(name, mail, pwd);
+
+        if (error.pwd) {
+            req.log.warn({ user: name , mail }, "Invalid password attempt")
+            return renderSignPage(res, {error:error, name, mail}, 401);
+        }
+
+        req.log.info({ user: name , mail }, "User logged in")
+        return res.writeHead(200).redirect("/").end(`Logged in as ${req.body.name}`)
+    } catch (err) {
+        req.log.error({ err, user: req.body.name , mail: req.body.mail }, "Server error during login.")
+        const error = {write: "Server error during login."};
+        return renderSignPage(res, {error, name: req.body.name, mail: req.body.mail}, 500);
     }
 })
 
