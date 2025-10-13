@@ -1,18 +1,29 @@
 require("dotenv").config();
 
 const express = require("express");
+const pinoHttp = require("pino-http");
+const logger = require("./src/utils/logger");
+
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.json());
+(async () => {
+    const { runUnitTests } = await import("./src/utils/unitTests.js");
+    await runUnitTests();
 
-app.use(express.static("./public"))
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(pinoHttp({ logger }));
 
-//endpoints
-const indexHandler = require("./src/handlers/indexHandler");
-const signHandlers = require("./src/handlers/signHandlers");
+    app.use(express.static("./public"));
 
-app.use("/",indexHandler)
-app.use("/sign", signHandlers)
+    const indexHandler = require("./src/handlers/indexHandler");
+    const signHandlers = require("./src/handlers/signHandlers");
+    const resultsHandler = require("./src/handlers/resultsHandler");
 
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+    app.use("/", indexHandler);
+    app.use("/sign", signHandlers);
+    app.use("/results", resultsHandler);
+
+    app.listen(port, () => logger.info({ port }, `Server running on http://localhost:${port}`));
+})();
