@@ -2,7 +2,7 @@ const {renderSignPage} = require("../utils/utils");
 const {validationService} = require("../services/validationService");
 const {isAccountExistingByName, isAccountExistingByMail, saveAccount} = require("../utils/dataUtils");
 const express = require('express');
-const { logUser } = require('../utils/dataUtils');
+const {logUser} = require('../utils/dataUtils');
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -17,28 +17,29 @@ router.post("/register", async (req, res) => {
 
         const validation = validationService(name, mail, pwd);
         if (validation.fields || validation.mail) {
+            req.log.warn({user: name, mail}, "Mail format invalid or missing fields.");
             return renderSignPage(res, {error: validation, name, mail}, 400);
         }
 
         if (await isAccountExistingByName(name)) {
             error.name = "This name is already use.";
-            //log
+            req.log.warn({user: name, mail}, "This name is already use.");
         }
 
         if (await isAccountExistingByMail(mail)) {
             error.mail = "This mail is already use.";
-            //log
+            req.log.warn({user: name, mail}, "This mail is already use.");
         }
 
         if (error.mail || error.name) {
-            //log
-            return renderSignPage(res, {error, name, mail}, 400);
+            return renderSignPage(res, {error, name, mail}, 409);
         }
 
         await saveAccount(name, mail, pwd);
+        req.log.info({user: name, mail}, "New user registered");
         return res.status(201).redirect(`/results?type=register`);
     } catch (err) {
-        //log
+        req.log.error({err, user: req.body.name, mail: req.body.mail}, "Server error during registration.");
         const error = {write: "Server error during registration."};
         return renderSignPage(res, {error, name: req.body.name, mail: req.body.mail}, 500);
     }
@@ -51,17 +52,18 @@ router.post("/login", async (req, res) => {
 
         const validation = validationService(name, mail, pwd);
         if (validation.fields || validation.mail) {
+            req.log.warn({user: name, mail}, "Mail format invalid or missing fields.");
             return renderSignPage(res, {error: validation, name, mail}, 400);
         }
 
         if (!(await isAccountExistingByName(name))) {
             error.name = "No existing account with this name.";
-            req.log.warn({ user: name , mail }, "No existing account with this name.");
+            req.log.warn({user: name, mail}, "No existing account with this name.");
         }
 
         if (!(await isAccountExistingByMail(mail))) {
             error.mail = "No existing account with this mail.";
-            req.log.warn({ user: name , mail }, "No existing account with this mail.");
+            req.log.warn({user: name, mail}, "No existing account with this mail.");
         }
 
         if (error.mail || error.name) {
@@ -71,14 +73,14 @@ router.post("/login", async (req, res) => {
         error.pwd = await logUser(name, mail, pwd);
 
         if (error.pwd) {
-            req.log.warn({ user: name , mail }, "Invalid password attempt");
-            return renderSignPage(res, {error:error, name, mail}, 401);
+            req.log.warn({user: name, mail}, "Invalid password attempt");
+            return renderSignPage(res, {error: error, name, mail}, 401);
         }
 
-        req.log.info({ user: name , mail }, "User logged in");
+        req.log.info({user: name, mail}, "User logged in");
         return res.status(200).redirect(`/results?type=login`);
     } catch (err) {
-        req.log.error({ err, user: req.body.name , mail: req.body.mail }, "Server error during login.");
+        req.log.error({err, user: req.body.name, mail: req.body.mail}, "Server error during login.");
         const error = {write: "Server error during login."};
         return renderSignPage(res, {error, name: req.body.name, mail: req.body.mail}, 500);
     }

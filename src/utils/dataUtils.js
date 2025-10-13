@@ -1,7 +1,5 @@
 import fs from "fs";
 import bcrypt from "bcrypt";
-import { err } from "pino-std-serializers";
-import e from "express";
 
 /**
  * Custom error class for account-related errors.
@@ -28,7 +26,6 @@ async function getAllAccounts() {
         if (err.code === 'ENOENT') {
             return [];
         }
-        //log
         throw new AccountError("Server error during account retrieval.", 'READ_ERROR');
     }
 }
@@ -88,9 +85,7 @@ export async function saveAccount(name, mail, password) {
         const hash = await bcrypt.hash(password, 12);
         accounts.push({name, mail, pwd: hash});
         await fs.writeFileSync("./data/accounts.json", JSON.stringify(accounts), "utf-8");
-        //log
     } catch (err) {
-        //log
         throw new AccountError("Server error during registration.", 'WRITE_ERROR');
     }
 }

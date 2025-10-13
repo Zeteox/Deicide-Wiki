@@ -11,11 +11,9 @@ export function validationService(name, mail, pwd) {
     const errors = {};
 
     if (!name || !mail || !pwd) {
-        //log
         errors.fields = "Missing required fields";
     }
     if (!regex.test(mail)) {
-        //log
         errors.mail = "Format email is invalid";
     }
     return errors;
