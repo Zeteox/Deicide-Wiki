@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deicide Wiki</title>
+    <link rel="icon" type="image/png" href="/assets/deicide.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center
+         bg-[#DBC9A7]
+         bg-[repeating-linear-gradient(45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px),_repeating-linear-gradient(-45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px)]
+         overflow-hidden"
+>
+<div id="custom-cursor"
+     class="fixed left-0 top-0 w-8 h-8 rounded-full pointer-events-none z-[9999]
+        transition-transform duration-150 ease-[cubic-bezier(.4,_2,_.3,_1)]
+        transition-opacity duration-500
+        bg-[radial-gradient(circle_at_10px_10px,_#A68B5B_70%,_#4C3826_100%)]
+        shadow-[0_0_8px_#A68B5B88]"
+     aria-hidden="true"
+></div>
+<div class="absolute inset-0 bg-gradient-to-b from-[#DBC9A7] via-[#F5E9D6] to-[#DBC9A7] opacity-90"></div>
+<div class="absolute top-0 left-0 w-64 h-64 bg-[#A68B5B] opacity-20 blur-3xl rounded-full animate-pulse"></div>
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-[#4C3826] opacity-10 blur-3xl rounded-full animate-pulse delay-300"></div>
+<header class="flex flex-col items-center mb-6 relative z-10">
+    <img src="/assets/deicide.png" alt="Deicide Logo"
+         class="w-20 h-20 mb-4 bg-center rounded-xl border-4 border-[#A68B5B] shadow-md">
+    <h1 class="text-3xl font-extrabold text-[#A68B5B] drop-shadow mb-1">Deicide Wiki</h1>
+    <p class="text-[#4C3826] text-base mb-2">Come on to contribute and explore the mod</p>
+</header>
+<main class="relative z-10 bg-[#F8F5F0] border-2 border-[#A68B5B] rounded-2xl shadow-2xl p-10 max-w-lg text-center">
+    <h2 class="text-4xl font-extrabold text-[#A68B5B] mb-2">RESULT</h2>
+</main>
+<nav class="relative z-10 w-full flex justify-center mt-6">
+    <a href="/" class="px-4 py-2 rounded-lg bg-[#A68B5B] text-white font-semibold hover:bg-[#4C3826] transition">
+        Home
+    </a>
+</nav>
+<footer class="mt-8 text-[#4C3826] text-sm opacity-70 relative z-10">
+    © 2025 Deicide Wiki — Community Driven Project
+</footer>
+<script src="/js/utils.js"></script>
+</body>
+</html>

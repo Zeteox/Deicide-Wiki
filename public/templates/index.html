@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deicide Wiki</title>
+    <link rel="icon" type="image/png" href="/assets/deicide.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center
+         bg-[#DBC9A7]
+         bg-[repeating-linear-gradient(45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px),_repeating-linear-gradient(-45deg,_#A68B5B_0px,_#A68B5B_2px,_transparent_2px,_transparent_20px)]
+         overflow-hidden"
+>
+
+<div class="absolute inset-0 bg-gradient-to-b from-[#DBC9A7] via-[#F5E9D6] to-[#DBC9A7] opacity-90"></div>
+<div class="absolute top-0 left-0 w-64 h-64 bg-[#A68B5B] opacity-20 blur-3xl rounded-full animate-pulse"></div>
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-[#4C3826] opacity-10 blur-3xl rounded-full animate-pulse delay-300"></div>
+
+<div class="relative z-10 bg-[#F8F5F0] border-2 border-[#A68B5B] rounded-2xl shadow-2xl p-10 max-w-lg text-center">
+    <header class="flex flex-col items-center mb-6">
+        <img src="/assets/deicide.png" alt="Deicide Logo"
+             class="w-24 h-24 mx-auto mb-4 rounded-xl border-4 border-[#A68B5B] shadow-md bg-center">
+
+        <h1 class="text-4xl font-extrabold text-[#A68B5B] mb-2">Deicide Wiki</h1>
+        <p class="text-[#4C3826] mb-6">
+            Explore the world of <span class="font-semibold text-[#A68B5B]">Deicide</span> —
+            community-built knowledge, lore, and mod insights.
+        </p>
+    </header>
+
+    <main class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/sign"
+           class="border-2 border-[#A68B5B] text-[#A68B5B] font-bold py-2 px-6 rounded-lg hover:bg-[#A68B5B] hover:text-white transition">
+            Log In / Sign Up
+        </a>
+    </main>
+</div>
+
+<footer class="mt-8 text-[#4C3826] text-sm opacity-70 relative z-10">
+    © 2025 Deicide Wiki — Community Driven Project
+</footer>
+<div id="custom-cursor"
+     class="fixed left-0 top-0 w-8 h-8 rounded-full pointer-events-none z-[9999]
+        transition-transform duration-150 ease-[cubic-bezier(.4,_2,_.3,_1)]
+        transition-opacity duration-500
+        bg-[radial-gradient(circle_at_10px_10px,_#A68B5B_70%,_#4C3826_100%)]
+        shadow-[0_0_8px_#A68B5B88]"
+     aria-hidden="true"
+></div>
+<script src="/js/utils.js"></script>
+</body>
+</html>
