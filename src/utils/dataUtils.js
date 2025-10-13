@@ -1,6 +1,7 @@
 import fs from "fs";
 import bcrypt from "bcrypt";
-
+import { err } from "pino-std-serializers";
+import e from "express";
 
 /**
  * Custom error class for account-related errors.
@@ -59,6 +60,20 @@ export async function isAccountExistingByMail(mail) {
 }
 
 /**
+ * @description Retrieves an account by name and email.
+ * @param {string} name - The name to check.
+ * @param {string} mail - The email to check.
+ * @return {Promise<Object|null>} - A promise that resolves to the account object if found, null otherwise.
+ */
+export async function getAccount(name, mail) {
+    const accounts = await getAllAccounts();
+    for (const account of accounts) {
+        if (account.name === name && account.mail === mail) return account;
+    }
+    return null;
+}
+
+/**
  * @description Saves a new account to the JSON file.
  * Hashes the password before saving.
  * @param {string} name - The account name.
@@ -80,30 +95,18 @@ export async function saveAccount(name, mail, password) {
     }
 }
 
-function logUser(req,res, {name, mail, pwd}) {
-    fs.readFile("./data/accounts.json","utf-8",(err, data) => {
-        if (err) {
-            res.writeHead(500).end("Internal server error")
-            req.log.error({ error: err.message }, "Unable to read accounts.json")
-            return
-        } else {
-            let accounts = JSON.parse(data)
-            for (x in accounts) {
-                if (name == accounts[x].name && mail == accounts[x].mail) {
-                    if (bcrypt.compareSync(pwd, accounts[x].pwd)) {
-                        res.writeHead(200).end(`Logged in as ${req.body.name}`)
-                        req.log.info({ user: name , mail }, "User logged in")
-                        return
-                    }
-                    res.writeHead(401).end("Invalid password")
-                    req.log.warn({ user: name , mail }, "Invalid password attempt")
-                    return
-                }
-            }
-            res.writeHead(404).end("Account not found")
-            req.log.warn({ user: name , mail }, "Account not found")
-        }
-    })
+/**
+ * @description Logs in a user by verifying their credentials.
+ * @param {string} name - The account name.
+ * @param {string} mail - The account email.
+ * @param {string} pwd - The account password.
+ * @returns {Promise<Object>} - A promise that resolves to an error object if login fails, or undefined if successful.
+ */
+export async function logUser(name, mail, pwd) {
+    const error = {};
+    const account = await getAccount(name, mail)
+    if (bcrypt.compareSync(pwd, account.pwd)) {
+        return;
+    }
+    return error.pwd = "Invalid password";
 }
-
-module.exports = {logUser}
